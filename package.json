@@ -9,8 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mapbox/mbtiles": "^0.12.1",
     "config": "^3.3.12",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
+    "hh-mm-ss": "^1.2.0",
     "hjson": "^3.2.2",
     "morgan": "^1.10.0",
     "winston": "^3.13.1",

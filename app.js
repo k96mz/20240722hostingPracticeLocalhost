@@ -32,17 +32,14 @@ logger.stream = {
 // Middleware
 const app = express();
 app.use(cors());
+const VTRouter = require('./routes/VT');
 app.use(
   morgan(morganFormat, {
     stream: logger.stream,
   })
 );
 app.use(express.static(`${__dirname}/${htdocsPath}`));
-
-// app.get('/', (req, res) => {
-//   console.log(`Hello from the server 😀`);
-//   res.send('Hello!');
-// });
+app.use('/VT', VTRouter);
 
 app.listen(port, () => {
   console.log(`Starting server at port ${port}`);
