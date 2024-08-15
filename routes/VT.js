@@ -3,9 +3,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('config');
 const fs = require('fs');
-const cors = require('cors');
 const MBTiles = require('@mapbox/mbtiles');
-const TimeFormat = require('hh-mm-ss');
 
 // Configure constant
 const mbtilesDir = config.get('mbtilesDir');
@@ -13,9 +11,6 @@ const mbtilesDir = config.get('mbtilesDir');
 // Global variables
 let mbtilesPool = {};
 let busy = false;
-
-const app = express();
-app.use(cors());
 
 // Specify mbtiles
 const getMBTiles = async (t, z, x, y) => {
@@ -50,8 +45,6 @@ const getTile = async (mbtiles, z, x, y) => {
       if (err) {
         reject();
       } else {
-        // console.log(`---------before------------`);
-        // console.log({ tile: tile, headers: headers });
         resolve({ tile: tile, headers: headers });
       }
     });
@@ -72,13 +65,17 @@ router.get('/zxy/:t/:z/:x/:y.pbf', async (req, res) => {
       // console.log(mbtiles);
       getTile(mbtiles, z, x, y)
         .then(r => {
+          // console.log(`---------before------------`);
+          // console.log({ tile: r.tile, headers: r.headers });
+          // console.log(`---------beforeend------------`);
           if (r.tile) {
             res.set('content-type', 'application/vnd.mapbox-vector-tile');
             res.set('content-encoding', 'gzip');
             res.set('last-modified', r.headers['Last-Modified']);
             res.set('etag', r.headers['ETag']);
             // console.log(`---------after------------`);
-            // console.log({ tile: tile, headers: headers });
+            // console.log(res.getHeaders());
+            // console.log(`---------afterend------------`);
             res.send(r.tile);
             busy = false;
           } else {

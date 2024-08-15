@@ -1,7 +1,6 @@
 // Set Module
 const config = require('config');
 const express = require('express');
-const cors = require('cors');
 const morgan = require('morgan');
 const winston = require('winston');
 const DailyRotateFile = require('winston-daily-rotate-file');
@@ -31,7 +30,6 @@ logger.stream = {
 
 // Middleware
 const app = express();
-app.use(cors());
 const VTRouter = require('./routes/VT');
 app.use(
   morgan(morganFormat, {
