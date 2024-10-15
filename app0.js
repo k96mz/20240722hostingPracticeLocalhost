@@ -35,7 +35,7 @@ app.use(
     stream: logger.stream,
   })
 );
-app.use(express.static(`${__dirname}/${htdocsPath}`));
+app.use(express.static(htdocsPath));
 
 app.listen(port, () => {
   console.log(`Starting server at port ${port}`);
